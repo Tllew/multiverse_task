@@ -13,6 +13,7 @@ class Rover:
             else:
                 self.forward()
             if self.outOfBounds():
+                self.back()
                 return self.printOutput(True)
         return self.printOutput()
 
@@ -31,13 +32,23 @@ class Rover:
         self.x += movement[0]
         self.y += movement[1]
 
+    def back(self):
+        if self.x > self.mapx:
+            self.x -= 1
+        if self.y > self.mapy:
+            self.y -= 1
+        if self.x < 0:
+            self.x += 1
+        if self.y < 0:
+            self.y += 1
+
     def outOfBounds(self):
-        if self.x > self.mapx or self.y > self.mapy or self.x == 0 or self.y == 0:
+        if self.x > self.mapx or self.y > self.mapy or self.x < 0 or self.y < 0:
             return True
         return False
 
-    def printOutput(self,isLost=False):
+    def printOutput(self, isLost=False):
         lostText = ""
         if isLost:
             lostText = " LOST"
-        return f'({self.x}, {self.y}, {self.orientation})' + lostText
+        return f"({self.x}, {self.y}, {self.orientation})" + lostText
